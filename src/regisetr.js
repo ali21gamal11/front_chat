@@ -1,4 +1,5 @@
 import React,{ useState } from "react";
+import axiosInstance from "./api/axiosInstance "
 import { Box, TextField, Button, Typography } from "@mui/material";
 
 
@@ -16,9 +17,22 @@ export default function Register() {
     setform({...form, [e.target.name]: e.target.value})
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    alert("");
+    try{
+      const res = await axiosInstance.post("/api/auth/register",form);
+      console.log(res)
+      setform({
+        name: "",
+        age: "",
+        email: "",
+        password: ""
+      }
+      )
+      alert("تم التسجيل");
+    }catch(err){
+      console.error(err);
+    }
   };
 
   return (
@@ -39,7 +53,7 @@ export default function Register() {
   }}
     >
     <Typography variant="h5" mb={3} color="text.primary" textAlign="center">
-      تسحيل الدخول 
+      تسجيل الدخول 
     </Typography>
 
 
