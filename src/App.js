@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Routes,Route,Navigate} from "react-router-dom";
 import Home from "./Pages/Home.jsx";
@@ -13,15 +12,22 @@ function App() {
   return (
     <div className="App">
 
+
+
     <Routes>
+
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>}/>
 
+    <Route path="/" element={<Layout/>}>
       <Route index element={<Home/>}/>
       <Route path="/PeopleList" element={<PeopleList/>}/>
       <Route path="chat/public" element={<PublicChat/>}/>
       <Route path="chat/private/:userId" element={<PrivateChat/>}/>
+    </Route>
+
       <Route path="*" element={<Navigate to="/" replace  />}/>
+
     </Routes>
 
 
