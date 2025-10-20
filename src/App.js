@@ -21,9 +21,9 @@ function App() {
 
     <Route path="/" element={<Layout/>}>
       <Route index element={<Home/>}/>
-      <Route path="/PeopleList" element={<PeopleList/>}/>
+      <Route path="PeopleList" element={<PeopleList/>}/>
       <Route path="chat/public" element={<PublicChat/>}/>
-      <Route path="chat/private/:userId" element={<PrivateChat/>}/>
+      <Route path="chat/private" element={<PrivateChat/>}/>
     </Route>
 
       <Route path="*" element={<Navigate to="/" replace  />}/>

@@ -1,12 +1,18 @@
-// src/components/Layout.jsx
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
+import { Navigate  } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function Layout() {
+    const token = Cookies.get("token")
+    if(!token || token.trim() === ""){
+        return <Navigate to ="/register"  replace/>
+    }
+    
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}>
       <Navbar />

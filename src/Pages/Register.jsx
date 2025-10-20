@@ -1,10 +1,14 @@
 import React,{ useState } from "react";
-import axiosInstance from "../api/axiosInstance "
+import Link from '@mui/material/Link';
+import Cookies from "js-cookie"
+import { useNavigate } from "react-router-dom"
+import axiosInstance from "../api/axiosInstance"
 import { Box, TextField, Button, Typography } from "@mui/material";
 
 
 export default function Register() {
 
+  const navigate = useNavigate(); 
   const [form,setform ] = useState({
     name:"",
     age:"",
@@ -21,15 +25,26 @@ export default function Register() {
     e.preventDefault();
     try{
       const res = await axiosInstance.post("/api/auth/register",form);
+
+      Cookies.set("token", res.data.token,{expires:1/50});
+      Cookies.set("name", res.data.name,{expires:1});
+      Cookies.set("id", res.data._id,{expires:1});
+      
+      console.log("senderId",Cookies.get("id"))
+
       console.log(res)
+      console.log("mytoken:",Cookies.get("token"));
+
+      navigate("/")
+
       setform({
         name: "",
         age: "",
         email: "",
         password: ""
-      }
-      )
-      alert("تم التسجيل");
+      })
+      
+      alert("تم تسجيل مستخدم جديد");
     }catch(err){
       console.error(err);
     }
@@ -53,7 +68,7 @@ export default function Register() {
   }}
     >
     <Typography variant="h5" mb={3} color="text.primary" textAlign="center">
-      تسجيل الدخول 
+      تسجيل مستخدم جديد 
     </Typography>
 
 
@@ -121,6 +136,10 @@ export default function Register() {
       >
         سجل
       </Button>
+      <Link href="/login" underline="hover" color="primary">
+        لدي حساب بالفعل
+      </Link>
+      
     </Box>
   );
 }

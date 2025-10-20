@@ -1,4 +1,3 @@
-// src/components/Sidebar.jsx
 import React from "react";
 import { Drawer, List, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
@@ -7,17 +6,17 @@ import PublicIcon from "@mui/icons-material/Public";
 import ChatIcon from "@mui/icons-material/Chat";
 import { Link, useLocation } from "react-router-dom";
 
+
 const drawerWidth = 240;
 
 export default function Sidebar() {
   const location = useLocation();
-  const userId = 5;
+
   const items = [
     { text: "Home", icon: <HomeIcon />, to: "/" },
     { text: "People", icon: <PeopleIcon />, to: "/PeopleList" },
     { text: "Public Chat", icon: <PublicIcon />, to: "/chat/public" },
-    // Private chat route will be /chat/private/:userId — هنا نعرض الرابط الرئيسي
-    { text: "Private Chat", icon: <ChatIcon />, to: `/chat/private/:${userId}` },
+    { text: "Private Chat", icon: <ChatIcon />, to: `/chat/private` },
   ];
 
   return (
