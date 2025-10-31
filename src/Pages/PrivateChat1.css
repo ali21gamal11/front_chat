@@ -1,0 +1,135 @@
+/* ===== Chat Page Layout ===== */
+.chat-page {
+  width: 90%;
+  max-width: 700px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+  height: 85vh;
+}
+
+/* ===== Messages Container ===== */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 5px;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+.messages::-webkit-scrollbar {
+  width: 6px;
+}
+.messages::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 3px;
+}
+.messages::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* ===== Message Bubbles ===== */
+.message {
+  padding: 10px 14px;
+  border-radius: 14px;
+  max-width: 80%;
+  word-wrap: break-word;
+  line-height: 1.4;
+  font-size: 15px;
+  position: relative;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.message.sent {
+  background: #d4f8c4;
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
+
+.message.received {
+  background: #e4e6eb;
+  align-self: flex-end;
+  border-top-right-radius: 0;
+}
+
+/* Optional small shadow for messages */
+.message.sent, .message.received {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ===== Send Box ===== */
+.send-box {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.send-box input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.send-box input:focus {
+  border-color: #333;
+}
+
+.send-box button {
+  padding: 10px 16px;
+  border: none;
+  background: #333;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.send-box button:hover {
+  background: #555;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 600px) {
+  .chat-page {
+    width: 95%;
+    padding: 10px;
+    height: 90vh;
+  }
+
+  .message {
+    font-size: 14px;
+    max-width: 90%;
+  }
+
+  .send-box input {
+    font-size: 14px;
+  }
+
+  .send-box button {
+    padding: 8px 12px;
+  }
+}

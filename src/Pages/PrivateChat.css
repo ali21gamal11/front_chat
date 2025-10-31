@@ -1,5 +1,5 @@
 .chat-page {
-  width: 400px;
+  width: 90%;
   margin: 20px auto;
   display: flex;
   flex-direction: column;
@@ -13,6 +13,8 @@
   overflow-y: auto;
   max-height: 400px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .message {
@@ -24,12 +26,12 @@
 
 .message.sent {
   background: #a7ff83;
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .message.received {
   background: #eee;
-  align-self: flex-start;
+  align-self: flex-end;
 }
 
 .send-box {

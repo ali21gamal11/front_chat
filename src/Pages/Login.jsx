@@ -27,11 +27,6 @@ export default function Register() {
       Cookies.set("token", res.data.token,{expires:1/50});
       Cookies.set("name", res.data.name,{expires:1});
       Cookies.set("id", res.data._id,{expires:1});
-      
-      console.log("senderId",Cookies.get("id"))
-
-      console.log(res)
-      console.log("mytoken:",Cookies.get("token"));
 
       navigate("/")
 
@@ -42,6 +37,7 @@ export default function Register() {
       
       alert("تم تسجيل دخولك يا اسد");
     }catch(err){
+      alert(err.response.data.message)
       console.error(err);
     }
   };

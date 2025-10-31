@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axiosInstance.js"
+import axiosInstance from "../api/axiosInstance.js";
 import { useState,useEffect } from "react"
 import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -45,7 +45,9 @@ return (
         {users.map((u) => (
           <Grid item xs={12} sm={6} md={4} key={u._id}>
             <Card
-              onClick={() => {Cookies.set("friendId",u._id);
+              onClick={() => {
+                Cookies.set("friendId",u._id);
+                Cookies.set("friendName",u.name);
                 navigate("/chat/private")}}
               sx={{
                 cursor: "pointer",

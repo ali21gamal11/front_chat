@@ -1,8 +1,8 @@
 import { useEffect,useState } from "react";
 import Cookies from "js-cookie";
 import io from "socket.io-client";
-import axios from "axios";
-import "./PrivateChat.css"
+import axiosInstance from "../api/axiosInstance.js";
+import "./PrivateChat1.css"
 
 const socket = io("http://localhost:5000");
 
@@ -14,11 +14,12 @@ export default function PrivateChat(){
     
     const userId = Cookies.get("id");
     const friendId = Cookies.get("friendId");
+    const friendName = Cookies.get("friendName");
 
     useEffect(()=>{
         const fetchMessages = async ()=>{
             try{
-                const res  = await axios.get(`http://localhost:5000/api/message/${userId}/${friendId}`);
+                const res  = await axiosInstance.get(`http://localhost:5000/api/message/${userId}/${friendId}`);
                 setMessages(res.data);
             }catch(err){
                 console.log(err);
@@ -50,7 +51,7 @@ export default function PrivateChat(){
 console.log("receiverId:", friendId);
 console.log("content:", content);
 
-            const res = await axios.post("http://localhost:5000/api/message",{
+            const res = await axiosInstance.post("http://localhost:5000/api/message",{
                 senderId:userId,
                 receiverId: friendId,
                 content,
@@ -64,7 +65,7 @@ console.log("content:", content);
 
      return (
     <div className="chat-page">
-      <h2>Private Chat</h2>
+      <h2>{`${friendName}`}</h2>
 
       <div className="messages">
         {messages.map((msg) => (

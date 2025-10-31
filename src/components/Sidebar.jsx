@@ -5,13 +5,14 @@ import PeopleIcon from "@mui/icons-material/People";
 import PublicIcon from "@mui/icons-material/Public";
 import ChatIcon from "@mui/icons-material/Chat";
 import { Link, useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 const drawerWidth = 240;
 
 export default function Sidebar() {
   const location = useLocation();
-
+  const userName = Cookies.get("name");
   const items = [
     { text: "Home", icon: <HomeIcon />, to: "/" },
     { text: "People", icon: <PeopleIcon />, to: "/PeopleList" },
@@ -30,6 +31,7 @@ export default function Sidebar() {
     >
       <Toolbar />
       <List>
+        <h2>{userName}</h2>
         {items.map((it) => (
           <ListItemButton
             key={it.text}
