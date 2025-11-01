@@ -39,7 +39,18 @@ export default function PrivateChat(){
             }
         });
 
-        return ()=> socket.off("newMessage");
+        socket.on("deleteMessage",({messageId})=>{
+          setMessages((prev)=>
+          prev.map((msg)=>
+          msg._id === messageId ? {...msg,deleted:true}:msg
+        )
+      );
+    });
+
+      return ()=> {
+        socket.off("newMessage");
+        socket.off("deleteMessage");
+      }
     },[friendId,userId]);
 
     const sendMessage = async (e)=>{
@@ -63,6 +74,24 @@ console.log("content:", content);
         }
     };
 
+    const deleteMessage = async(id)=>{
+      try{
+        await axiosInstance.put(`http://localhost:5000/api/message/likeDeleted/${id}`,{
+          deleted:true,
+        });
+        setMessages((prev)=>
+          prev.map((msg)=>
+            msg._id === id ? {...msg,deleted:true}:msg
+          )
+        );
+
+      socket.emit("deleteMessage",{messageId:id,senderId:userId,receiverId:friendId});
+
+      }catch(err){
+        console.error("Error deleting message:",err);
+      }
+    };
+
      return (
     <div className="chat-page">
       <h2>{`${friendName}`}</h2>
@@ -73,7 +102,21 @@ console.log("content:", content);
             key={msg._id}
             className={`message ${msg.senderId === userId ? "sent" : "received"}`}
           >
-            <p>{msg.content}</p>
+            {msg.deleted === true ?
+              <b style={{color:"red"}}>رسالة محذوفة</b>
+            :
+              <p>{msg.content}</p>}
+            
+             {/* زر الحذف */}
+    {!msg.deleted && msg.senderId === userId && (
+      <button
+        onClick={() => deleteMessage(msg._id)}
+        className="delete-btn"
+      >
+        حذف
+      </button>
+    )}
+            
           </div>
         ))}
       </div>

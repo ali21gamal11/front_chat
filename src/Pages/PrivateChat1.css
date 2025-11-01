@@ -25,6 +25,21 @@
   scroll-behavior: smooth;
 }
 
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: color 0.2s;
+}
+
+.delete-btn:hover {
+  color: red;
+}
+
+
 /* Custom Scrollbar */
 .messages::-webkit-scrollbar {
   width: 6px;
