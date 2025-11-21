@@ -3,11 +3,13 @@ import Link from '@mui/material/Link';
 import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom"
 import axiosInstance from "../api/axiosInstance"
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { Box, TextField, Button, Typography,Alert } from "@mui/material";
 
 
 export default function Register() {
 
+  const [errorMessage, setErrorMessage] = useState("");
+  
   const navigate = useNavigate(); 
   const [form,setform ] = useState({
     name:"",
@@ -41,6 +43,7 @@ export default function Register() {
       
       alert("تم تسجيل مستخدم جديد");
     }catch(err){
+      setErrorMessage(err.response?.data?.message || "حدث خطأ غير متوقع");
       console.error(err);
     }
   };
@@ -65,6 +68,8 @@ export default function Register() {
     <Typography variant="h5" mb={3} color="text.primary" textAlign="center">
       تسجيل مستخدم جديد 
     </Typography>
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+    
 
 
     <Box style={{

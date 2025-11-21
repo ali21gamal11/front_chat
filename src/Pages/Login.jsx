@@ -3,10 +3,12 @@ import Link from '@mui/material/Link';
 import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom"
 import axiosInstance from "../api/axiosInstance"
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { Box, TextField, Button, Typography ,Alert } from "@mui/material";
 
 
-export default function Register() {
+export default function Login() {
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate(); 
   const [form,setform ] = useState({
@@ -15,8 +17,9 @@ export default function Register() {
   })
 
   function handleform(e){
-
-    setform({...form, [e.target.name]: e.target.value})
+    
+    setform({...form, [e.target.name]: e.target.value});
+    setErrorMessage("");
   }
 
   const handleSubmit = async(e) => {
@@ -37,7 +40,7 @@ export default function Register() {
       
       alert("تم تسجيل دخولك يا اسد");
     }catch(err){
-      alert(err.response.data.message)
+      setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
       console.error(err);
     }
   };
@@ -62,6 +65,7 @@ export default function Register() {
     <Typography variant="h5" mb={3} color="text.primary" textAlign="center">
       تسجيل الدخول 
     </Typography>
+    {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
     
         <TextField

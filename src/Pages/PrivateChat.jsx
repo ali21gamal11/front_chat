@@ -2,12 +2,16 @@ import { useEffect,useState } from "react";
 import Cookies from "js-cookie";
 import io from "socket.io-client";
 import axiosInstance from "../api/axiosInstance.js";
-import "./PrivateChat1.css"
+import "./PrivateChat1.css";
+import{ Alert } from "@mui/material";
+
 
 const socket = io("http://localhost:5000");
 
 
 export default function PrivateChat(){
+    
+    const [errorMessage, setErrorMessage] = useState("");
     
     const [ content , setContent ] = useState("");
     const [ messages , setMessages ] = useState([]);
@@ -22,6 +26,7 @@ export default function PrivateChat(){
                 const res  = await axiosInstance.get(`http://localhost:5000/api/message/${userId}/${friendId}`);
                 setMessages(res.data);
             }catch(err){
+              setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
                 console.log(err);
             }
         };
@@ -70,6 +75,7 @@ console.log("content:", content);
             socket.emit("sendMessage",res.data);
             setContent("");
         }catch(err){
+              setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
             console.error(err);
         }
     };
@@ -88,6 +94,7 @@ console.log("content:", content);
       socket.emit("deleteMessage",{messageId:id,senderId:userId,receiverId:friendId});
 
       }catch(err){
+        setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
         console.error("Error deleting message:",err);
       }
     };
@@ -95,6 +102,7 @@ console.log("content:", content);
      return (
     <div className="chat-page">
       <h2>{`${friendName}`}</h2>
+       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
       <div className="messages">
         {messages.map((msg) => (
@@ -107,7 +115,7 @@ console.log("content:", content);
             :
               <p>{msg.content}</p>}
             
-             {/* زر الحذف */}
+            
     {!msg.deleted && msg.senderId === userId && (
       <button
         onClick={() => deleteMessage(msg._id)}
