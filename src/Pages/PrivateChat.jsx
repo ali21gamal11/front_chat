@@ -25,6 +25,7 @@ export default function PrivateChat(){
             try{
                 const res  = await axiosInstance.get(`http://localhost:5000/api/message/${userId}/${friendId}`);
                 setMessages(res.data);
+                console.log(res);
             }catch(err){
               setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
                 console.log(err);
@@ -108,7 +109,7 @@ console.log("content:", content);
         {messages.map((msg) => (
           <div
             key={msg._id}
-            className={`message ${msg.senderId === userId ? "sent" : "received"}`}
+            className={`message ${msg.senderId._id === userId ? "sent" : "received"}`}
           >
             {msg.deleted === true ?
               <b style={{color:"red"}}>رسالة محذوفة</b>
@@ -116,7 +117,7 @@ console.log("content:", content);
               <p>{msg.content}</p>}
             
             
-    {!msg.deleted && msg.senderId === userId && (
+    {!msg.deleted && msg.senderId._id === userId && (
       <button
         onClick={() => deleteMessage(msg._id)}
         className="delete-btn"
