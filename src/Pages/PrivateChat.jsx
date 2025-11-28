@@ -41,6 +41,7 @@ export default function PrivateChat(){
                 (msg.senderId === userId && msg.receiverId === friendId)||
                 (msg.senderId === friendId && msg.receiverId === userId)
             ){
+                console.log("Received new message via socket:", msg);
                 setMessages((prev)=>[...prev,msg]);
             }
         });
@@ -65,8 +66,8 @@ export default function PrivateChat(){
 
         try{
             console.log("senderId:", userId);
-console.log("receiverId:", friendId);
-console.log("content:", content);
+            console.log("receiverId:", friendId);
+            console.log("content:", content);
 
             const res = await axiosInstance.post("http://localhost:5000/api/message",{
                 senderId:userId,
@@ -109,7 +110,7 @@ console.log("content:", content);
         {messages.map((msg) => (
           <div
             key={msg._id}
-            className={`message ${msg.senderId._id === userId ? "sent" : "received"}`}
+            className={`message ${msg.senderId._id === userId || msg.senderId === userId ? "sent" : "received"}`}
           >
             {msg.deleted === true ?
               <b style={{color:"red"}}>رسالة محذوفة</b>
@@ -117,7 +118,7 @@ console.log("content:", content);
               <p>{msg.content}</p>}
             
             
-    {!msg.deleted && msg.senderId._id === userId && (
+    {!msg.deleted &&( msg.senderId._id === userId || msg.senderId === userId )&& (
       <button
         onClick={() => deleteMessage(msg._id)}
         className="delete-btn"

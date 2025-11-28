@@ -16,14 +16,14 @@ export default function PrivateChat(){
     const [ content , setContent ] = useState("");
     const [ messages , setMessages ] = useState([]);
     
-    const userId = Cookies.get("id");
-    const roomId = "650e2f1b3f1a2c0012345678";
+    const userID = Cookies.get("id");
+    const roomID = "650e2f1b3f1a2c0012345678";
     const friendName = "public";
 
     useEffect(()=>{
         const fetchMessages = async ()=>{
             try{
-                const res  = await axiosInstance.get(`http://localhost:5000/api/message/room/${roomId}`);
+                const res  = await axiosInstance.get(`http://localhost:5000/api/message/room/${roomID}`);
                 setMessages(res.data);
                 console.log(res);
             }catch(err){
@@ -32,17 +32,15 @@ export default function PrivateChat(){
             }
         };
         fetchMessages();
-    },[roomId,userId]);
+    },[roomID,userID]);
 
     
     useEffect(()=>{
-        socket.on("newMessage",(msg)=>{
-            if(
-                (msg.senderId === userId && msg.receiverId === roomId)||
-                (msg.senderId === roomId && msg.receiverId === userId)
-            ){
+        socket.on("newMessageRoom",(msg)=>{
+            
+                console.log("Received new message via socket:", msg);
                 setMessages((prev)=>[...prev,msg]);
-            }
+            
         });
 
         socket.on("deleteMessage",({messageId})=>{
@@ -54,26 +52,31 @@ export default function PrivateChat(){
     });
 
       return ()=> {
-        socket.off("newMessage");
+        socket.off("newMessageRoom");
         socket.off("deleteMessage");
       }
-    },[roomId,userId]);
+    },[roomID,userID]);
 
+
+
+    // Send Message
     const sendMessage = async (e)=>{
         e.preventDefault();
         if(!content.trim()) return;
 
         try{
-            console.log("senderId:", userId);
-console.log("receiverId:", roomId);
-console.log("content:", content);
+            console.log("senderId:", userID);
+            console.log("receiverId:", roomID);
+            console.log("content:", content);
 
             const res = await axiosInstance.post("http://localhost:5000/api/message/room",{
-                senderId:userId,
-                receiverId: roomId,
+                senderId:userID,
+                receiverId: roomID,
                 content,
             });
-            socket.emit("sendMessage",res.data);
+            
+            socket.emit("newMessageRoom",res.data);
+            console.log("Message sent:", res.data);
             setContent("");
         }catch(err){
               setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
@@ -92,7 +95,7 @@ console.log("content:", content);
           )
         );
 
-      socket.emit("deleteMessage",{messageId:id,senderId:userId,receiverId:roomId});
+      socket.emit("deleteMessage",{messageId:id,senderId:userID,receiverId:roomID});
 
       }catch(err){
         setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
@@ -109,7 +112,7 @@ console.log("content:", content);
         {messages.map((msg) => (
           <div
             key={msg._id}
-            className={`message ${msg.senderId._id === userId ? "sent" : "received"}`}
+            className={`message ${msg.senderId._id === userID || msg.senderId === userID ? "sent" : "received"}`}
           >
             {msg.deleted === true ?
               <b style={{color:"red"}}>رسالة محذوفة</b>
@@ -117,7 +120,7 @@ console.log("content:", content);
               <p>{msg.content}---{msg.senderId.name}</p>}
             
             
-    {!msg.deleted && msg.senderId._id === userId && (
+    {!msg.deleted && ( msg.senderId._id === userID || msg.senderId === userID )&& (
       <button
         onClick={() => deleteMessage(msg._id)}
         className="delete-btn"
