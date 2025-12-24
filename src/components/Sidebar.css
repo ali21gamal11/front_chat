@@ -1,0 +1,98 @@
+/* ===== Sidebar Component ===== */
+.sidebar {
+  width: 240px !important;
+  background: var(--color-surface) !important;
+  border-right: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar .MuiDrawer-paper {
+  background: var(--color-surface) !important;
+  border-right: 1px solid var(--color-border);
+  color: var(--color-text-primary) !important;
+}
+
+.sidebar .MuiToolbar-root {
+  background: var(--color-surface) !important;
+}
+
+.sidebar-header {
+  padding: var(--spacing-lg) var(--spacing-md);
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--spacing-md);
+}
+
+.sidebar-username {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-accent);
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.sidebar .MuiList-root {
+  padding: var(--spacing-md) 0;
+}
+
+.sidebar .MuiListItemButton-root {
+  color: var(--color-text-secondary) !important;
+  border-radius: var(--radius-md) !important;
+  margin: var(--spacing-xs) var(--spacing-md) !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  transition: all var(--transition-fast);
+}
+
+.sidebar .MuiListItemButton-root:hover {
+  background-color: var(--color-primary) !important;
+  color: var(--color-text-primary) !important;
+  transform: translateX(4px);
+}
+
+.sidebar .MuiListItemButton-root.Mui-selected {
+  background-color: var(--color-accent) !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+.sidebar .MuiListItemButton-root.Mui-selected:hover {
+  background-color: var(--color-accent-hover) !important;
+}
+
+.sidebar .MuiListItemIcon-root {
+  color: inherit !important;
+  min-width: 40px;
+}
+
+.sidebar .MuiListItemText-root {
+  margin-left: var(--spacing-sm);
+}
+
+.sidebar .MuiListItemText-primary {
+  color: inherit;
+  font-weight: 500;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 960px) {
+  .sidebar {
+    width: 200px !important;
+  }
+
+  .sidebar-username {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 180px !important;
+  }
+
+  .sidebar .MuiListItemButton-root {
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+  }
+
+  .sidebar .MuiListItemText-primary {
+    font-size: var(--font-size-sm) !important;
+  }
+}

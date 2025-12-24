@@ -1,0 +1,94 @@
+/* ===== Layout Component ===== */
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  width: 100%;
+  background: var(--color-background);
+}
+
+.layout-header {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+.layout-sidebar {
+  flex-shrink: 0;
+  width: 240px;
+  overflow-y: auto;
+  background: var(--color-surface);
+}
+
+.layout-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background: var(--color-background);
+}
+
+.layout-content {
+  flex: 1;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+  background: var(--color-background);
+}
+
+.layout-footer {
+  flex-shrink: 0;
+  width: 100%;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 960px) {
+  .layout-sidebar {
+    width: 200px;
+  }
+
+  .layout-content {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 600px) {
+  .layout-body {
+    flex-direction: column-reverse;
+  }
+
+  .layout-sidebar {
+    width: 100%;
+    max-height: 300px;
+    border-top: 1px solid var(--color-border);
+    border-right: none;
+  }
+
+  .layout-content {
+    padding: var(--spacing-md);
+    flex: 1;
+  }
+}
+
+/* ===== Scrollbar Styling ===== */
+.layout-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.layout-content::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+.layout-content::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.layout-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
