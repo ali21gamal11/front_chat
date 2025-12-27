@@ -1,89 +1,160 @@
 /* ===== Navbar Component ===== */
 .navbar {
   width: 100%;
-  background: var(--color-surface) !important;
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-primary) 100%) !important;
   color: var(--color-text-primary) !important;
-  border-bottom: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm) !important;
+  border-bottom: 2px solid var(--color-accent);
+  box-shadow: var(--shadow-md) !important;
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.navbar .MuiToolbar-root {
-  background: var(--color-surface) !important;
+.navbar-toolbar {
   padding: var(--spacing-md) var(--spacing-lg) !important;
-  min-height: 60px !important;
+  min-height: 70px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--transition-normal);
 }
 
-.navbar-brand {
+/* ===== Logo Section ===== */
+.navbar-logo-box {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  flex: 1;
 }
 
 .navbar-logo {
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
+  font-size: 28px !important;
+  font-weight: 800 !important;
   background: linear-gradient(135deg, var(--color-accent), #00d4ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  margin: 0 !important;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
 }
 
-.navbar-title {
-  color: var(--color-text-primary) !important;
-  font-weight: 600 !important;
+.navbar-logo:hover {
+  transform: scale(1.05);
 }
 
-.navbar-actions {
+/* ===== User Menu ===== */
+.navbar-user-menu {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  margin-left: auto;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: rgba(0, 132, 255, 0.1);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-accent);
 }
 
-.navbar-button {
+.navbar-user-icon {
   color: var(--color-accent) !important;
+  font-size: 24px !important;
+}
+
+.navbar-user-name {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--color-text-primary) !important;
+  margin: 0 !important;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.navbar-menu-button {
+  color: var(--color-text-primary) !important;
   transition: all var(--transition-fast);
 }
 
-.navbar-button:hover {
-  color: var(--color-accent-hover) !important;
+.navbar-menu-button:hover {
+  background: rgba(0, 132, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+/* ===== Dropdown Menu ===== */
+.navbar-dropdown-menu .MuiPaper-root {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.navbar-menu-header {
+  background: var(--color-primary) !important;
+  color: var(--color-text-primary) !important;
+  cursor: default !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.navbar-logout-item {
+  color: var(--color-deleted) !important;
+  transition: all var(--transition-fast);
+}
+
+.navbar-logout-item:hover {
+  background-color: rgba(255, 68, 68, 0.1) !important;
+}
+
+.navbar-logout-item .MuiSvgIcon-root {
+  color: var(--color-deleted) !important;
 }
 
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
-  .navbar .MuiToolbar-root {
+  .navbar-toolbar {
     padding: var(--spacing-sm) var(--spacing-md) !important;
-    min-height: 56px !important;
+    min-height: 60px !important;
   }
 
   .navbar-logo {
-    font-size: var(--font-size-xl);
+    font-size: 22px !important;
   }
 
-  .navbar-title {
-    font-size: var(--font-size-base) !important;
+  .navbar-user-menu {
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .navbar-user-name {
+    display: none;
+  }
+
+  .navbar-user-icon {
+    font-size: 20px !important;
   }
 }
 
 @media (max-width: 480px) {
-  .navbar .MuiToolbar-root {
-    padding: var(--spacing-xs) var(--spacing-sm) !important;
+  .navbar-toolbar {
+    padding: var(--spacing-xs) var(--spacing-md) !important;
+    min-height: 56px !important;
+    gap: var(--spacing-sm);
   }
 
   .navbar-logo {
-    font-size: var(--font-size-lg);
+    font-size: 20px !important;
   }
 
-  .navbar-title {
+  .navbar-user-menu {
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+    border: none;
+    background: transparent;
+  }
+
+  .navbar-user-icon {
     display: none;
   }
 
-  .navbar-actions {
-    gap: var(--spacing-sm);
+  .navbar-user-name {
+    display: none;
   }
 }

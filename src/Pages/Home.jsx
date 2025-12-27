@@ -11,10 +11,10 @@ const Home = () => {
 
   return (
     <Container maxWidth="lg" className="home-container">
-      {/* Header Section */}
+  
       <Box className="home-header">
         <Typography className="home-site-title">
-          💬 ChatWeb
+          💬 Section.dev
         </Typography>
         <Box className="home-greeting">
           Welcome back, <Typography component="span" className="name-highlight">{userName}</Typography>!

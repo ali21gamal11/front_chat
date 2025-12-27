@@ -103,7 +103,7 @@ export default function Login() {
       >
         سجل
       </Button>
-      <Link href="/register" underline="hover" color="primary">
+      <Link href="/register" underline="hover" color="primary" textAlign="center" sx={{ mt: 2 }}>
         ليس لدي حساب
       </Link>
     </Box>

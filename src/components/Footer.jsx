@@ -1,10 +1,22 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
+import "./Footer.css";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <Box component="footer" sx={{ py: 1, bgcolor: "background.paper", textAlign: "center" }}>
-      <Typography variant="body2">© {new Date().getFullYear()} ChatWeb — All rights reserved</Typography>
+    <Box component="footer" className="footer">
+      <Container maxWidth="lg">
+        <Box className="footer-content">
+          <Typography className="footer-copyright">
+            © {currentYear} Section.dev — All rights reserved
+          </Typography>
+          <Typography className="footer-subtitle">
+            student project A.G.A
+          </Typography>
+        </Box>
+      </Container>
     </Box>
   );
 }

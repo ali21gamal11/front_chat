@@ -136,7 +136,7 @@ export default function Register() {
       >
         سجل
       </Button>
-      <Link href="/login" underline="hover" color="primary">
+      <Link href="/login" underline="hover" color="primary" textAlign="center" sx={{ mt: 2 }}>
         لدي حساب بالفعل
       </Link>
       

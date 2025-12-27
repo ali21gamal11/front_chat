@@ -1,90 +1,74 @@
 /* ===== Footer Component ===== */
 .footer {
   width: 100%;
-  background: var(--color-surface) !important;
-  border-top: 1px solid var(--color-border);
-  padding: var(--spacing-lg) var(--spacing-md) !important;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-surface) 100%);
+  border-top: 2px solid var(--color-accent);
+  padding: var(--spacing-lg) 0 !important;
   margin-top: auto;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
-  color: var(--color-text-primary) !important;
-}
-
-.footer .MuiBox-root {
-  text-align: center;
-}
-
-.footer .MuiTypography-root {
-  color: var(--color-text-secondary) !important;
-  font-size: var(--font-size-sm) !important;
-  margin: 0 !important;
-  transition: color var(--transition-fast);
-}
-
-.footer .MuiTypography-root:hover {
-  color: var(--color-accent) !important;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
 }
 
 .footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.footer-links {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: var(--spacing-lg);
-  flex-wrap: wrap;
-  margin-bottom: var(--spacing-md);
-}
-
-.footer-link {
-  color: var(--color-accent);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-}
-
-.footer-link:hover {
-  color: var(--color-accent-hover);
-  text-decoration: underline;
+  gap: var(--spacing-md);
+  text-align: center;
+  padding: var(--spacing-lg) var(--spacing-md) !important;
 }
 
 .footer-copyright {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  text-align: center;
-  margin: var(--spacing-md) 0 0;
-  padding-top: var(--spacing-md);
-  border-top: 1px solid var(--color-border);
+  font-size: 14px !important;
+  color: var(--color-text-primary) !important;
+  margin: 0 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px;
+}
+
+.footer-subtitle {
+  font-size: 13px !important;
+  color: var(--color-text-secondary) !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+  font-style: italic;
 }
 
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
   .footer {
+    padding: var(--spacing-md) 0 !important;
+  }
+
+  .footer-content {
     padding: var(--spacing-md) var(--spacing-sm) !important;
+    gap: var(--spacing-sm);
   }
 
-  .footer-links {
-    gap: var(--spacing-md);
+  .footer-copyright {
+    font-size: 13px !important;
   }
 
-  .footer .MuiTypography-root {
-    font-size: 11px !important;
+  .footer-subtitle {
+    font-size: 12px !important;
   }
 }
 
 @media (max-width: 480px) {
   .footer {
+    padding: var(--spacing-md) 0 !important;
+  }
+
+  .footer-content {
     padding: var(--spacing-md) var(--spacing-sm) !important;
+    gap: var(--spacing-xs);
   }
 
-  .footer-links {
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
+  .footer-copyright {
+    font-size: 12px !important;
   }
 
-  .footer-link {
-    font-size: var(--font-size-sm);
+  .footer-subtitle {
+    font-size: 11px !important;
   }
 }

@@ -31,7 +31,7 @@ export default function Sidebar() {
     >
       <Toolbar />
       <List>
-        <h2>{userName}</h2>
+        <h2 style={{ textAlign: "center",marginBottom: "10%" }}>{userName}</h2>
         {items.map((it) => (
           <ListItemButton
             key={it.text}

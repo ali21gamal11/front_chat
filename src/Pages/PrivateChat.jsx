@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect,useState,useRef } from "react";
 import Cookies from "js-cookie";
 import io from "socket.io-client";
 import axiosInstance from "../api/axiosInstance.js";
@@ -15,7 +15,7 @@ export default function PrivateChat(){
     
     const [ content , setContent ] = useState("");
     const [ messages , setMessages ] = useState([]);
-    
+    const LastMessageRef = useRef(null)
     const userId = Cookies.get("id");
     const friendId = Cookies.get("friendId");
     const friendName = Cookies.get("friendName");
@@ -34,7 +34,7 @@ export default function PrivateChat(){
         fetchMessages();
     },[friendId,userId]);
 
-    
+
     useEffect(()=>{
         socket.on("newMessage",(msg)=>{
             if(
@@ -59,6 +59,10 @@ export default function PrivateChat(){
         socket.off("deleteMessage");
       }
     },[friendId,userId]);
+
+    useEffect(()=>{
+      LastMessageRef.current?.scrollIntoView({behavior:"smooth"},[messages]);
+    })
 
     const sendMessage = async (e)=>{
         e.preventDefault();
@@ -129,6 +133,7 @@ export default function PrivateChat(){
             
           </div>
         ))}
+        <div ref={LastMessageRef}/>
       </div>
 
       <form onSubmit={sendMessage} className="send-box">
