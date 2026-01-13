@@ -115,6 +115,10 @@
   box-shadow: var(--shadow-md);
 }
 
+.message.sent p div{
+  display: none;
+} 
+
 /* Received Messages - Dark Gray */
 .message.received {
   justify-content: flex-start;
@@ -130,6 +134,11 @@
   box-shadow: var(--shadow-sm);
   border-bottom-left-radius: var(--radius-sm);
 }
+
+.message.received p div{
+  color:#0084ff;
+  font-weight:bold
+} 
 
 .message.received p:hover {
   background: #4a4a5a;

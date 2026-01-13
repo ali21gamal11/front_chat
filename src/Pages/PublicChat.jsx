@@ -117,7 +117,8 @@ export default function PrivateChat(){
             {msg.deleted === true ?
               <b style={{color:"red"}}>رسالة محذوفة</b>
             :
-              <p>{msg.content}---{msg.senderId.name}</p>}
+              
+              <p><div>{msg.senderId.name}</div>{msg.content}</p>}
             
             
     {!msg.deleted && ( msg.senderId._id === userID || msg.senderId === userID )&& (
