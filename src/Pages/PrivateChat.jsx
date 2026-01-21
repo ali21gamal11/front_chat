@@ -3,14 +3,16 @@ import Cookies from "js-cookie";
 import io from "socket.io-client";
 import axiosInstance from "../api/axiosInstance.js";
 import "./PrivateChat1.css";
-import{ Alert } from "@mui/material";
+import{ Alert,IconButton } from "@mui/material";
+
+import BlockIcon from '@mui/icons-material/Block';
 
 
 const socket = io("http://localhost:5000");
 
 
 export default function PrivateChat(){
-    
+    const [isbanned, setIsBanned] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     
     const [ content , setContent ] = useState("");
@@ -43,6 +45,16 @@ export default function PrivateChat(){
             ){
                 console.log("Received new message via socket:", msg);
                 setMessages((prev)=>[...prev,msg]);
+                
+            }
+
+        });
+
+          socket.on("block",(msg)=>{
+            if(msg.senderId === friendId && msg.receiverId === userId){
+                console.log("تم ضغط زر الحظر بواسطة:", msg.senderId);
+                setIsBanned(msg.banstatus);
+
             }
         });
 
@@ -51,7 +63,7 @@ export default function PrivateChat(){
           prev.map((msg)=>
           msg._id === messageId ? {...msg,deleted:true}:msg
         )
-      );
+      );      
     });
 
       return ()=> {
@@ -63,6 +75,8 @@ export default function PrivateChat(){
     useEffect(()=>{
       LastMessageRef.current?.scrollIntoView({behavior:"smooth"},[messages]);
     })
+
+    
 
     const sendMessage = async (e)=>{
         e.preventDefault();
@@ -86,6 +100,17 @@ export default function PrivateChat(){
         }
     };
 
+    const block = async()=>{
+      try{socket.emit("block",{senderId: userId,receiverId: friendId,banstatus:!isbanned});
+      console.log("تم ضغط زر الحظر بواسطتك");
+      setIsBanned(!isbanned);
+    }catch(err){
+          setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
+          console.error(err);
+        }
+      };
+
+
     const deleteMessage = async(id)=>{
       try{
         await axiosInstance.put(`http://localhost:5000/api/message/likeDeleted/${id}`,{
@@ -107,7 +132,13 @@ export default function PrivateChat(){
 
      return (
     <div className="chat-page">
-      <h2>{`${friendName}`}</h2>
+      <div className="header">
+        <h2>{`${friendName}--${isbanned}`}</h2>
+        <IconButton onClick={block} color="error" aria-label="block user">
+          <BlockIcon/>
+        </IconButton>
+      </div>
+
        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
       <div className="messages">
@@ -135,7 +166,8 @@ export default function PrivateChat(){
         ))}
         <div ref={LastMessageRef}/>
       </div>
-
+      {isbanned && <Alert severity="error">تم حظر المحادثة</Alert> }
+      {!isbanned && 
       <form onSubmit={sendMessage} className="send-box">
         <input
           type="text"
@@ -145,6 +177,7 @@ export default function PrivateChat(){
         />
         <button type="submit">Send</button>
       </form>
+      }
     </div>
   );
 }

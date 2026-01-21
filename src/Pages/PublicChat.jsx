@@ -3,7 +3,8 @@ import Cookies from "js-cookie";
 import io from "socket.io-client";
 import axiosInstance from "../api/axiosInstance.js";
 import "./PrivateChat1.css";
-import{ Alert } from "@mui/material";
+
+import{ Alert   } from "@mui/material";
 
 
 const socket = io("http://localhost:5000");
@@ -106,7 +107,7 @@ export default function PrivateChat(){
      return (
     <div className="chat-page">
       <h2>{`${friendName}`}</h2>
-       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+      {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
       <div className="messages">
         {messages.map((msg) => (

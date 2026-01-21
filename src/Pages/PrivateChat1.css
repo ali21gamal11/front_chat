@@ -14,11 +14,13 @@
   animation: fadeIn var(--transition-normal);
 }
 
-.chat-page h2 {
+.chat-page .header {
   margin: 0 0 var(--spacing-md) 0;
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-3xl);
   color: var(--color-text-primary);
   text-align: left;
+  display:flex;
+  justify-content:space-between;
   padding-bottom: var(--spacing-md);
   border-bottom: 2px solid var(--color-border);
 }
