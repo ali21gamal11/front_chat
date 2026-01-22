@@ -12,7 +12,8 @@ const socket = io("http://localhost:5000");
 
 
 export default function PrivateChat(){
-    const [isbanned, setIsBanned] = useState(false);
+    const [isbanned, setIsBanned] = useState({status:false,by:""});
+    
     const [errorMessage, setErrorMessage] = useState("");
     
     const [ content , setContent ] = useState("");
@@ -53,7 +54,8 @@ export default function PrivateChat(){
           socket.on("block",(msg)=>{
             if(msg.senderId === friendId && msg.receiverId === userId){
                 console.log("تم ضغط زر الحظر بواسطة:", msg.senderId);
-                setIsBanned(msg.banstatus);
+                setIsBanned({status: msg.status,by:msg.senderId});
+                setErrorMessage("تم حظرك بواسطة الطرف الاخر")
 
             }
         });
@@ -101,9 +103,24 @@ export default function PrivateChat(){
     };
 
     const block = async()=>{
-      try{socket.emit("block",{senderId: userId,receiverId: friendId,banstatus:!isbanned});
-      console.log("تم ضغط زر الحظر بواسطتك");
-      setIsBanned(!isbanned);
+      try{
+      if(isbanned.status === true){
+        if(isbanned.by === userId){
+          socket.emit("block",{senderId: userId,receiverId: friendId,status:!isbanned.status});
+          console.log("تم ضغط زر الحظر بواسطتك");
+          setIsBanned({status:!isbanned.status,by:userId});
+      }else{
+        setErrorMessage("لا يمكنك فك الحظر..الطرف الاخر قام بحظرك");
+      }
+      }else{
+        socket.emit("block",{senderId: userId,receiverId: friendId,status:!isbanned.status});
+        console.log("تم ضغط زر الحظر بواسطتك");
+        setIsBanned({status:!isbanned.status,by:userId});
+        setErrorMessage("انت حظرت هذه المحادثة");
+        
+      }
+      
+
     }catch(err){
           setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
           console.error(err);
@@ -133,13 +150,13 @@ export default function PrivateChat(){
      return (
     <div className="chat-page">
       <div className="header">
-        <h2>{`${friendName}--${isbanned}`}</h2>
+        <h2>{`${friendName}--${isbanned.status}--id:${isbanned.by}`}</h2>
         <IconButton onClick={block} color="error" aria-label="block user">
           <BlockIcon/>
         </IconButton>
       </div>
 
-       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
 
       <div className="messages">
         {messages.map((msg) => (
@@ -166,8 +183,9 @@ export default function PrivateChat(){
         ))}
         <div ref={LastMessageRef}/>
       </div>
-      {isbanned && <Alert severity="error">تم حظر المحادثة</Alert> }
-      {!isbanned && 
+      
+      {isbanned.status && <Alert severity="error">{errorMessage}</Alert> }
+      {!isbanned.status && 
       <form onSubmit={sendMessage} className="send-box">
         <input
           type="text"
