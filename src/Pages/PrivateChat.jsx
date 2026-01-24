@@ -110,7 +110,7 @@ export default function PrivateChat(){
           console.log("تم ضغط زر الحظر بواسطتك");
           setIsBanned({status:!isbanned.status,by:userId});
       }else{
-        setErrorMessage("لا يمكنك فك الحظر..الطرف الاخر قام بحظرك");
+        setErrorMessage("لا يمكنك الغاء الحظر..الطرف الاخر قام بحظرك");
       }
       }else{
         socket.emit("block",{senderId: userId,receiverId: friendId,status:!isbanned.status});
@@ -130,16 +130,20 @@ export default function PrivateChat(){
 
     const deleteMessage = async(id)=>{
       try{
-        await axiosInstance.put(`http://localhost:5000/api/message/likeDeleted/${id}`,{
-          deleted:true,
-        });
-        setMessages((prev)=>
-          prev.map((msg)=>
-            msg._id === id ? {...msg,deleted:true}:msg
-          )
-        );
+        if(isbanned.status === false ){
 
-      socket.emit("deleteMessage",{messageId:id,senderId:userId,receiverId:friendId});
+          await axiosInstance.put(`http://localhost:5000/api/message/likeDeleted/${id}`,{
+            deleted:true,
+          });
+          setMessages((prev)=>
+            prev.map((msg)=>
+              msg._id === id ? {...msg,deleted:true}:msg
+            )
+          );
+          socket.emit("deleteMessage",{messageId:id,senderId:userId,receiverId:friendId});
+        }else{
+          setErrorMessage("لا يمكنك حذف الرسائل اثناء الحظر");
+        }
 
       }catch(err){
         setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
