@@ -106,6 +106,15 @@ export default function PrivateChat(){
       try{
       if(isbanned.status === true){
         if(isbanned.by === userId){
+
+          const res = await axiosInstance.put("http://localhost:5000/api/user/block",{
+                senderId:userId,
+                receiverId: friendId,
+                status:!isbanned.status
+          });
+          console.log("ضغطت على حظر وراحت للباك صح");
+
+
           socket.emit("block",{senderId: userId,receiverId: friendId,status:!isbanned.status});
           console.log("تم ضغط زر الحظر بواسطتك");
           setIsBanned({status:!isbanned.status,by:userId});
@@ -113,6 +122,8 @@ export default function PrivateChat(){
         setErrorMessage("لا يمكنك الغاء الحظر..الطرف الاخر قام بحظرك");
       }
       }else{
+
+
         socket.emit("block",{senderId: userId,receiverId: friendId,status:!isbanned.status});
         console.log("تم ضغط زر الحظر بواسطتك");
         setIsBanned({status:!isbanned.status,by:userId});
@@ -122,8 +133,12 @@ export default function PrivateChat(){
       
 
     }catch(err){
+      console.log("STATUS:", err.response?.status);
+    console.log("DATA:", err.response?.data);
+    console.log("FULL ERROR:", err);
           setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
           console.error(err);
+          console.log("في مشكلة في ال api");
         }
       };
 
