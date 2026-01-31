@@ -29,6 +29,19 @@ export default function PrivateChat(){
                 const res  = await axiosInstance.get(`http://localhost:5000/api/message/${userId}/${friendId}`);
                 setMessages(res.data);
                 console.log(res);
+
+                // const user  = await axiosInstance.get(`http://localhost:5000/api/user/${userId}`);
+                // const isblocked = user.data.bannedList.includes(friendId);
+                // if(isblocked){
+                //   socket.emit("block",{senderId: userId,receiverId: friendId,status:true});
+                // }
+
+                // const friend  = await axiosInstance.get(`http://localhost:5000/api/user/${friendId}`);
+                // const isHeblockedMe = friend.data.bannedList.includes(userId);
+                // if(isHeblockedMe){
+                //   socket.emit("block",{senderId: friendId,receiverId: userId,status:true});
+                // }
+
             }catch(err){
               setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
                 console.log(err);
@@ -108,11 +121,10 @@ export default function PrivateChat(){
         if(isbanned.by === userId){
 
           const res = await axiosInstance.put("http://localhost:5000/api/user/block",{
-                senderId:userId,
-                receiverId: friendId,
-                status:!isbanned.status
+                userblockedId:friendId
           });
           console.log("ضغطت على حظر وراحت للباك صح");
+          console.log(res.data)
 
 
           socket.emit("block",{senderId: userId,receiverId: friendId,status:!isbanned.status});
@@ -122,7 +134,10 @@ export default function PrivateChat(){
         setErrorMessage("لا يمكنك الغاء الحظر..الطرف الاخر قام بحظرك");
       }
       }else{
-
+        const res = await axiosInstance.put("http://localhost:5000/api/user/block",{
+                userblockedId:friendId
+          });
+        console.log(res.data)
 
         socket.emit("block",{senderId: userId,receiverId: friendId,status:!isbanned.status});
         console.log("تم ضغط زر الحظر بواسطتك");
@@ -133,9 +148,6 @@ export default function PrivateChat(){
       
 
     }catch(err){
-      console.log("STATUS:", err.response?.status);
-    console.log("DATA:", err.response?.data);
-    console.log("FULL ERROR:", err);
           setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
           console.error(err);
           console.log("في مشكلة في ال api");
