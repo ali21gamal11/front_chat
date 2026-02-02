@@ -30,17 +30,19 @@ export default function PrivateChat(){
                 setMessages(res.data);
                 console.log(res);
 
-                // const user  = await axiosInstance.get(`http://localhost:5000/api/user/${userId}`);
-                // const isblocked = user.data.bannedList.includes(friendId);
-                // if(isblocked){
-                //   socket.emit("block",{senderId: userId,receiverId: friendId,status:true});
-                // }
+                const user  = await axiosInstance.get(`http://localhost:5000/api/user/${userId}`);
+                const isblocked = user.data.bannedList.includes(friendId);
+                if(isblocked){
+                  setIsBanned({status: true,by:userId});
+                  setErrorMessage("انت حظرت هذه المحادثة");
+                }
 
-                // const friend  = await axiosInstance.get(`http://localhost:5000/api/user/${friendId}`);
-                // const isHeblockedMe = friend.data.bannedList.includes(userId);
-                // if(isHeblockedMe){
-                //   socket.emit("block",{senderId: friendId,receiverId: userId,status:true});
-                // }
+                const friend  = await axiosInstance.get(`http://localhost:5000/api/user/${friendId}`);
+                const isHeblockedMe = friend.data.bannedList.includes(userId);
+                if(isHeblockedMe){
+                  setIsBanned({status: true,by:friendId});
+                  setErrorMessage("تم حظرك بواسطة الطرف الاخر");
+                }
 
             }catch(err){
               setErrorMessage((err.response?.data?.message || err.response?.data?.error ) || "حدث خطأ غير متوقع");
