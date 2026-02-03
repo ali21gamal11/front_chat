@@ -30,7 +30,7 @@ const Home = () => {
           What you can do
         </Typography>
         
-        <Grid container spacing={3} className="features-grid">
+        <Grid container spacing={3} className="features-grid" justifyContent="center">
           {/* Feature 1: People List */}
           <Grid item xs={12} sm={6} md={4}>
             <Link to="/peoplelist" style={{ textDecoration: "none" }}>

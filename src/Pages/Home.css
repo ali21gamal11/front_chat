@@ -1,10 +1,15 @@
 /* ===== Home Page Container ===== */
 .home-container {
   width: 100%;
+  max-width: 1200px;
   min-height: 100%;
   padding: var(--spacing-2xl) var(--spacing-lg);
   background: var(--color-background);
   animation: fadeIn var(--transition-normal);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ===== Header Section ===== */
@@ -54,6 +59,10 @@
 .home-features-section {
   margin-bottom: var(--spacing-2xl);
   animation: fadeIn 0.8s ease-out;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .features-title {
@@ -66,6 +75,9 @@
 
 .features-grid {
   margin-bottom: var(--spacing-2xl) !important;
+  width: 100%;
+  max-width: 1000px;
+  justify-content: center;
 }
 
 /* ===== Feature Card ===== */
@@ -143,6 +155,8 @@
   padding: var(--spacing-2xl);
   text-align: center;
   animation: fadeIn 1s ease-out;
+  width: 100%;
+  max-width: 800px;
 }
 
 .stats-title {

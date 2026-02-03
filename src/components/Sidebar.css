@@ -96,3 +96,17 @@
     font-size: var(--font-size-sm) !important;
   }
 }
+
+/* Mobile drawer styles */
+@media (max-width: 900px) {
+  .sidebar .MuiDrawer-paper {
+    width: 240px !important;
+    background: var(--color-surface) !important;
+    border-right: 1px solid var(--color-border);
+    color: var(--color-text-primary) !important;
+  }
+
+  .sidebar .MuiListItemButton-root {
+    margin: var(--spacing-xs) var(--spacing-sm) !important;
+  }
+}

@@ -44,6 +44,18 @@
   transform: scale(1.05);
 }
 
+/* ===== Mobile Menu Button ===== */
+.navbar-mobile-menu {
+  color: var(--color-text-primary) !important;
+  margin-right: var(--spacing-md) !important;
+  transition: all var(--transition-fast);
+}
+
+.navbar-mobile-menu:hover {
+  background: rgba(0, 132, 255, 0.2) !important;
+  transform: scale(1.1);
+}
+
 /* ===== User Menu ===== */
 .navbar-user-menu {
   display: flex;

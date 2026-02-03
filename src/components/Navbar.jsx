@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
-export default function Navbar() {
+export default function Navbar({ handleDrawerToggle }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const userName = Cookies.get("name") || "User";
@@ -31,6 +31,18 @@ export default function Navbar() {
   return (
     <AppBar position="static" className="navbar">
       <Toolbar className="navbar-toolbar">
+        {/* Mobile Menu Button */}
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          sx={{ mr: 2, display: { md: 'none' } }}
+          className="navbar-mobile-menu"
+        >
+          <MenuIcon />
+        </IconButton>
+
         {/* Logo */}
         <Box className="navbar-logo-box">
           <Typography className="navbar-logo">

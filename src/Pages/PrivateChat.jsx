@@ -183,7 +183,7 @@ export default function PrivateChat(){
      return (
     <div className="chat-page">
       <div className="header">
-        <h2>{`${friendName}--${isbanned.status}--id:${isbanned.by}`}</h2>
+        <h2>{`${friendName}`}</h2>
         <IconButton onClick={block} color="error" aria-label="block user">
           <BlockIcon/>
         </IconButton>
